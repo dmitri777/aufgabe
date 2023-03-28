@@ -6,6 +6,8 @@
 `npm install`
 `node server.js`
 
+Default port is 7171
+
 ## To view all repos on a formatted page, visit root 
 
 e.g. `http://localhost:7171/`
