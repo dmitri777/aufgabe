@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <script>
+        function toggleFavorite(url) {
+           fetch('/fav', {
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json'
+               },
+               body: JSON.stringify({url: url})
+           }).then(function(response) {
+               return response.json();
+           }).then(function(data) {
+               if (data.status === 'ok') {
+                   window.location.reload();
+               } else {
+                   console.error(data.status)
+                   alert('Error toggling favorite');
+               }
+           });
+        }
+    </script>
+</head>
+<body>
+    <h2>
+    popular repos since <%= since%>
+    </h2>
+
+    <% for(var i=0; i < repos.length; i++) { %>
+        <div style="margin-top: 2rem;">
+            <span style="font-weight: bold"><%= repos[i].full_name%></span>
+            stars: <%= repos[i].stargazers_count%>
+        </div>
+        <div>
+            <a href="<%= repos[i].html_url%>"><%= repos[i].html_url%></a>
+        </div>
+        <div>
+            <%= repos[i].language%>
+        </div>
+        <div>
+            <%= repos[i].description%>
+        </div>
+        <div>
+            isFavorite: <%= repos[i].isFavorite%>
+            <button onclick="toggleFavorite('<%= repos[i].html_url%>')">toggle favorite</button>
+        </div>
+    <% } %>
+</body>
+</html>
